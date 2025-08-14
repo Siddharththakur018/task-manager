@@ -24,10 +24,8 @@ export function AuthProvider({children}){
         const unsub = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user)
         })
-
         return () => unsub()
     }, [])
-
 
     return(
         <AuthContext.Provider value={{currentUser, signup, login, logout, googleSignIn}}>
