@@ -1,6 +1,7 @@
 const Task = require('../model/Task')
 const mongoose = require('mongoose');
 
+
 const getTasks = async(req, res, next) => {
     try {
         const tasks = await Task.find().sort({createdAt: -1});
@@ -20,5 +21,30 @@ const createTask = async (req,res,next) => {
     }
 }
 
+const updateTask = async(req,res,next) => {
+    try {
+        if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+            return res.status(400).json({error: "Invalid Id"})
+        }
+        const updateTask = await Task.findByIdAndUpdate(req.params.id, req.body, {new:true})
+        res.status(200).json(updateTask)
+    } catch (error) {
+        res.status(500).json({message: 'Server Error', error: error.message});
+    }
+}
 
-module.exports = {getTasks, createTask}
+const deleteTask = async(req,res,next) => {
+    try {
+        if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+            return res.status(400).json({error: "Invalid Id"})
+        }
+        await Task.findByIdAndDelete(req.params.id)
+        res.status(204).json({message: "Id Deleted"})
+    } catch (error) {
+        res.status(500).json({message: 'Server Error', error: error.message});
+    }
+}
+
+
+
+module.exports = {getTasks, createTask, updateTask, deleteTask}
