@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
 const priorities = ["Low", "Medium", "High"];
-const API_URL = "http://localhost:3000/tasks";
+const API_URL = "https://task-manager-aunh.vercel.app/tasks";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
